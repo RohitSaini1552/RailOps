@@ -6,6 +6,7 @@ const seatLockRoutes = require('./routes/seatLockRoutes');
 const trainRoutes = require('./routes/trainRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 const errorMiddleware = require('./middleware/errorMiddleware');
+const { httpMetricsMiddleware, metricsHandler } = require('./metrics');
 
 const app = express();
 
@@ -16,10 +17,13 @@ app.use(
   })
 );
 app.use(express.json({ limit: '1mb' }));
+app.use(httpMetricsMiddleware);
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
+
+app.get('/metrics', metricsHandler);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/seat-locks', seatLockRoutes);

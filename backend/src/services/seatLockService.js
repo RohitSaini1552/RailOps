@@ -1,5 +1,10 @@
 const { connectRedis, redisClient } = require('../config/redis');
 const { normalizeSeatNumbers } = require('../utils/seatMatrix');
+const {
+  seatLocksAcquired,
+  seatLocksRejected,
+  seatLocksReleased
+} = require('../metrics');
 
 const LOCK_TTL_MS = 5 * 60 * 1000;
 
@@ -126,7 +131,13 @@ async function lockSeat({ trainId, journeyDate, seatNumber, userId, ttlMs = LOCK
     }
   );
 
-  return result === 'OK';
+  if (result === 'OK') {
+    seatLocksAcquired.inc();
+    return true;
+  }
+
+  seatLocksRejected.inc();
+  return false;
 }
 
 async function releaseSeat({ trainId, journeyDate, seatNumber, userId }) {
@@ -143,6 +154,7 @@ async function releaseSeat({ trainId, journeyDate, seatNumber, userId }) {
   }
 
   await redisClient.del(getSeatLockKey(trainId, journeyDate, seatNumber));
+  seatLocksReleased.inc();
   return true;
 }
 
