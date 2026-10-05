@@ -10,7 +10,7 @@ async function startServer() {
   const server = http.createServer(app);
   const io = new Server(server, {
     cors: {
-      origin: env.clientUrl,
+      origin: env.clientOrigins,
       methods: ['GET', 'POST', 'PUT', 'DELETE'],
       credentials: false
     }
