@@ -113,4 +113,18 @@ To test locking and concurrency without Docker, start Redis locally first, then 
 
 ## Screenshots
 
+### Home Page
 ![Home page](assets/home.png)
+
+### Search Trains
+![Search trains](assets/search-trains.png)
+
+### Booking Page
+![Booking page](assets/booking-page.png)
+
+### Booking Confirmation Page
+![Booking Confirmation page](assets/booking-confirmation.png)
+
+### My Bookings  Page
+![Booking Confirmation page](assets/MyBookings.png)
+
