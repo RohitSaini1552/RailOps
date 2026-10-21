@@ -110,3 +110,7 @@ Frontend defaults to:
 ## Local Redis Test
 
 To test locking and concurrency without Docker, start Redis locally first, then launch the backend and frontend in separate terminals. Once both are running, open the same train/date page in two browser windows and try locking or booking the same seat from both windows.
+
+## Screenshots
+
+![Home page](assets/home.png)
